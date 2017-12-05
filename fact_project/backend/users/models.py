@@ -10,38 +10,6 @@ from __future__ import unicode_literals
 from django.db import models
 
 
-class Clienti(models.Model):
-    nume = models.CharField(max_length=256)
-    j = models.CharField(max_length=256)
-    cui = models.CharField(max_length=256)
-    adresa = models.CharField(max_length=256)
-    cont = models.CharField(max_length=256)
-    banca = models.CharField(max_length=256)
-    email = models.CharField(max_length=255)
-    activ = models.CharField(max_length=3, blank=True, null=True)
-
-    class Meta:
-        managed = True
-        db_table = 'clienti'
-
-    def __unicode__(self):
-        return self.nume
-
-class Contacte(models.Model):
-    id_client = models.ForeignKey(Clienti, )
-    nume = models.CharField(max_length=256)
-    email = models.CharField(max_length=256)
-    telefon = models.CharField(max_length=256)
-    pozitie = models.CharField(max_length=256)
-
-    class Meta:
-        managed = True
-        db_table = 'contacte'
-
-    def __unicode__(self):
-        return self.nume
-
-
 class Fac(models.Model):
     id_client = models.IntegerField()
     data_fac = models.DateField()
@@ -55,7 +23,7 @@ class Fac(models.Model):
     externa = models.CharField(max_length=3)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'fac'
 
 
@@ -68,7 +36,7 @@ class FacDet(models.Model):
     pu_valuta = models.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'fac_det'
 
 
@@ -78,7 +46,7 @@ class Incasari(models.Model):
     suma = models.DecimalField(max_digits=20, decimal_places=2)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'incasari'
 
 
@@ -88,5 +56,5 @@ class Valuta(models.Model):
     eur = models.DecimalField(db_column='EUR', max_digits=10, decimal_places=4)  # Field name made lowercase.
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'valuta'
