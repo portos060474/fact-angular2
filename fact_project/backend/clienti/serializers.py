@@ -1,7 +1,6 @@
 from rest_framework.serializers import ModelSerializer
  
-from models import Client,Contacte
-
+from backend.clienti.models import Client, Contact
 
 
 # Clienti
@@ -9,7 +8,7 @@ from models import Client,Contacte
 
 class ClientiSerializer(ModelSerializer):
 	"""
-	Create Clients available.
+	Create Clients serializer.
 
 	"""
 
@@ -18,13 +17,13 @@ class ClientiSerializer(ModelSerializer):
 		fields = '__all__'
 
 
-class ClientiDetailsSerializer(ModelSerializer):
+class ContactsSerializer(ModelSerializer):
 	"""
-	Create Clients available.
+	Create Contacts serializer.
 
 	"""
 
 	class Meta:
-		model = Client
+		model = Contact
 		fields = '__all__'
 

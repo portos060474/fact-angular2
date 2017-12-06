@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'backend.users',
-    'backend.clienti'
+    'backend.clienti',
+    'backend.facturi',
 ]
 
 MIDDLEWARE_CLASSES = [

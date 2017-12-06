@@ -1,9 +1,5 @@
 # -*- coding: utf-8 -*-
-from __future__ import unicode_literals
-
 from django.db import models
-
-# Create your models here.
 
 class Client(models.Model):
     nume = models.CharField(max_length=256)
@@ -22,7 +18,7 @@ class Client(models.Model):
     def __unicode__(self):
         return self.nume
 
-class Contacte(models.Model):
+class Contact(models.Model):
     id_client = models.ForeignKey(Client)
     nume = models.CharField(max_length=256)
     email = models.CharField(max_length=256)
