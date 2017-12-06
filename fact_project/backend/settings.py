@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'backend.clienti',
     'backend.facturi',
     'backend.incasari',
+    'backend.valute',
 ]
 
 MIDDLEWARE_CLASSES = [
