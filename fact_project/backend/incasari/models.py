@@ -10,5 +10,5 @@ class Incasari(models.Model):
     suma = models.DecimalField(max_digits=20, decimal_places=2)
 
     class Meta:
-        managed = True
+        managed = False
         db_table = 'incasari'
