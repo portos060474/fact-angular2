@@ -21,7 +21,7 @@ from backend.facturi import urls
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^users/', include('backend.users.urls', namespace='users', app_name='users-api')),
+    url(r'^api/users/', include('backend.users.urls', namespace='users', app_name='users-api')),
     url(r'^api/clienti/', include("backend.clienti.urls", namespace='clienti-api')),
     url(r'^api/facturi/', include("backend.facturi.urls", namespace='facturi-api')),
     
