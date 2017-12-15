@@ -9,5 +9,5 @@ class Valuta(models.Model):
     eur = models.DecimalField(db_column='EUR', max_digits=10, decimal_places=4)  # Field name made lowercase.
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'valuta'
