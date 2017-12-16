@@ -1,0 +1,38 @@
+/* Structure */
+.example-container {
+    display: flex;
+    flex-direction: column;
+    min-width: 300px;
+  }
+  
+  .example-header {
+    min-height: 64px;
+    padding: 8px 24px 0;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  .mat-table {
+    overflow: auto;
+    max-height: 500px;
+  }
+
+  .mat-column-id {
+    flex: 0 0 50px;
+  }
+
+  .mat-column-nume {
+    flex: 0 0 350px;
+  }
+  .mat-column-adresa {
+    flex: 0 0 500px;
+  }
+  .mat-column-cui {
+    flex: 0 0 150px;
+  }
+  .mat-header-cell.mat-sort-header-sorted {
+    color: black;
+  }

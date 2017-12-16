@@ -24,6 +24,7 @@
           <div class="form-group">
             <label class="form-label" for="username">Username</label>
             <input type="text" #username class="form-control" id="username">
+            <div *ngIf="error" class="alert alert-danger">{{error}}</div>
             <div style="margin-top: 10px;" *ngIf="usernameError" class="alert alert-danger" role="alert">	
               <span *ngFor="let error of usernameError">
                 {{ error }}
@@ -44,7 +45,7 @@
               {{ error }}
             </span>
           </div>
-          <button type="submit" class="btn btn-default float-left">Submit</button>
+          <button type="submit" class="btn btn-default float-right">Submit</button>
           <!-- <a class="float-right" [routerLink]="['/signup']">Click here to signup</a> -->
         </form>
       </div>
