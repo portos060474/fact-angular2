@@ -7,7 +7,6 @@ import { contentHeaders } from "./headers";
 @Injectable()
 export class AuthenticationService {
     public token: string;
-    private headers = contentHeaders;
     
     constructor(private http: Http) {
         // set token if saved in local storage
@@ -16,7 +15,7 @@ export class AuthenticationService {
     }
     
     login(username: string, password: string): Observable<boolean> {
-        return this.http.post('http://127.0.0.1:8000/api/users/login/', JSON.stringify({ username: username, password: password }), headers: headers)
+        return this.http.post('http://127.0.0.1:8000/api/users/login/', JSON.stringify({ username: username, password: password }), { headers: contentHeaders})
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let token = response.json() && response.json().token;
