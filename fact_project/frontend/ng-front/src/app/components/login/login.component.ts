@@ -25,16 +25,24 @@
 	 
 		login() {
 			this.loading = true;
+			let test = false;
 			this.authenticationService.login(this.model.username, this.model.password)
 				.subscribe(result => {
 					if (result === true) {
 						// login successful
+						test = true;
 						this.router.navigate(['/']);
 					} else {
 						// login failed
 						this.error = 'Username or password is incorrect';
 						this.loading = false;
+						test = true;
 					}
 				});
+				if (! test ) {
+					this.error = 'Username or password is incorrect';
+					this.loading = false;
+				}
+				event.preventDefault();
 		}
 	}

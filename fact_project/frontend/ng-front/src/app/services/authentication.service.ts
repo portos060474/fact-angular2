@@ -7,7 +7,6 @@ import { contentHeaders } from "./headers";
 @Injectable()
 export class AuthenticationService {
     public token: string;
-    debugger
     constructor(private http: Http) {
         // set token if saved in local storage
         var currentUser = JSON.parse(localStorage.getItem('currentUser'));
