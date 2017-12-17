@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
 	ngOnInit() {
 		// reset login status
 		this._authenticationService.logout();
-		//this.login("login","portos","123qweasd.")
+		
 	};
 
 	login(event, username, password) {

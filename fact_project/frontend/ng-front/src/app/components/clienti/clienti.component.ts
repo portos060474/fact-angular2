@@ -59,8 +59,20 @@ export class ClientiComponent implements OnInit {
     console.log(row)
   }
 
-  changeClientActiveStatus(id) {
-    console.log("changing the ative status of " + id )
+  changeClientActiveStatus(client) {
+    let newstatus: string;
+
+    console.log("changing the ative status of " + client.nume )
+    if (client.activ == 'Yes') {
+      console.log("era activ, il dezactivam");
+      newstatus="No";
+      } 
+    else {
+      console.log("era inactiv, il activam");
+      newstatus="Yes";
+      }
+  
+    this.clientService.setCustomerActiveStatus(client,newstatus)
   }
 
 

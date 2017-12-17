@@ -19,7 +19,6 @@
     overflow: auto;
     max-height: 500px;
   }
-
   .mat-column-id {
     flex: 0 0 50px;
   }
@@ -28,11 +27,14 @@
     flex: 0 0 350px;
   }
   .mat-column-adresa {
-    flex: 0 0 500px;
+    min-width: 450px;
   }
   .mat-column-cui {
     flex: 0 0 150px;
   }
+  .mat-column-activ {
+    flex: 0 0 50px;
+  } 
   .mat-header-cell.mat-sort-header-sorted {
     color: black;
   }

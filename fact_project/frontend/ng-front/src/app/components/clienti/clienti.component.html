@@ -38,7 +38,7 @@
             <mat-cell *matCellDef="let client">
                 <mat-checkbox 
                     [checked]="client.activ == 'Yes'"
-                    (change)="changeClientActiveStatus(client.id)">
+                    (change)="changeClientActiveStatus(client)">
                 </mat-checkbox>
             </mat-cell>
         </ng-container>        
