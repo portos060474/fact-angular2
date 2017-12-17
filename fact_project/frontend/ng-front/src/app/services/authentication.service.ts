@@ -3,9 +3,11 @@ import { Http, Headers, Response } from '@angular/http';
 import { Observable } from 'rxjs';
 import 'rxjs/add/operator/map'
 import { contentHeaders } from "./headers";
+import { tokenNotExpired } from 'angular2-jwt';
     
 @Injectable()
 export class AuthenticationService {
+    subject: any;
     public token: string;
     constructor(private http: Http) {
         // set token if saved in local storage
@@ -38,5 +40,23 @@ export class AuthenticationService {
         // clear token remove user from local storage to log user out
         this.token = null;
         localStorage.removeItem('currentUser');
+    }
+
+    // get login status
+    getLoginStatus(): Observable<any> {
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (currentUser) {
+            if (tokenNotExpired(undefined, currentUser['token'])) {
+                this.subject.next({
+                        username: currentUser['username'],
+                        token: currentUser['token']
+                });
+            } else {
+                this.subject.next();
+            };
+        } else {
+            this.subject.next();
+        };
+        return this.subject.asObservable();
     }
 }
