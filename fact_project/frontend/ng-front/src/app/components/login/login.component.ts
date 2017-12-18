@@ -10,69 +10,70 @@ import { isDefined } from '@ng-bootstrap/ng-bootstrap/util/util';
 
 
 @Component({
-	selector: 'app-login',
-	templateUrl: './login.component.html',
-	styleUrls: ['./login.component.css'],
+    selector: 'app-login',
+    templateUrl: './login.component.html',
+    styleUrls: ['./login.component.css'],
 })
 
 export class LoginComponent implements OnInit {
-	jwtHelper: any;
+    jwtHelper: any;
 
-	req: any;
-	title: string = "Login";
-	endpoint: string = "http://127.0.0.1:8000/api/users/login/";
-	usernameError: [any];
-	passwordError: [any];
-	nonFieldError: [any];
-	error: string;
+    req: any;
+    title: string = "Login";
+    endpoint: string = 'http://127.0.0.1:8000/api/users/login/';
+    usernameError: [any];
+    passwordError: [any];
+    nonFieldError: [any];
+    error: string;
 
-	constructor(
-		public _router: Router,
-		public _http: Http,
-		public _authenticationService: AuthenticationService) {};
+    constructor(
+      public _router: Router,
+      public _http: Http,
+      public _authenticationService: AuthenticationService) {};
 
-	ngOnInit() {
-		// reset login status
-		this._authenticationService.logout();
-		
-	};
+    ngOnInit() {
+      // reset login status
+      this._authenticationService.logout();
+      this.error = '';
+    }
 
-	login(event, username, password) {
-		let test_login = false;
-		this.req = this._authenticationService.login(username, password)
-			.subscribe(result => {
-				if (result === true) {
-					// login successful
-					// this._authenticationService.sendMessage();
-					console.log("login succesful")
-					test_login = true;
+    login(event, username, password) {
+      let test_login = false;
+      this.req = this._authenticationService.login(username, password)
+        .subscribe(result => {
+          if (result === true) {
+            // login successful
+            // this._authenticationService.sendMessage();
+            console.log('login succesful');
+            test_login = true;
+            this.error = '';
 
-					this._authenticationService.refreshToken()
-						.subscribe((res) => console.log(res));
+            this._authenticationService.refreshToken()
+              .subscribe((res) => console.log(res));
 
 
-					this._router.navigate(['home']);
-				} else {
-					// login failed
-					this.error = 'Username or password is incorrect';
-					error => console.log(error)
-				}
-			});
-		if (! test_login ) {
-			this.error = 'Username or password is incorrect';
-			// this.loading = false;
-			return false;
-		}
-		event.preventDefault();
+            this._router.navigate(['home']);
+          } else {
+            // login failed
+            this.error = 'Username or password is incorrect';
+            error => console.log(error);
+          }
+        });
+      if (! test_login ) {
+        this.error = 'Username or password is incorrect';
+        // this.loading = false;
+        return false;
+      }
+      event.preventDefault();
 
-	};
+    }
 
-	signup(event) {
-		this._router.navigate(['signup']);
-	};
+    signup(event) {
+      this._router.navigate(['signup']);
+    }
 
-	ngOnDestroy(){
-		if ( isDefined(this.req)) {this.req.unsubscribe();}
-	}
+    ngOnDestroy(){
+      if ( isDefined(this.req)) {this.req.unsubscribe(); }
+    }
 
 }

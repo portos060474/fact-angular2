@@ -5,7 +5,7 @@ import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map'
 import { AuthHttp,tokenNotExpired } from 'angular2-jwt';
 
- 
+
 import { contentHeaders } from './headers';
 import { error } from 'selenium-webdriver';
 
@@ -14,21 +14,23 @@ import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
 
 @Injectable()
 export class AuthenticationService {
-    
+
     public token: string;
+    public username: string;
     private subject = new Subject<any>();
     refreshSubscription: any;
     jwtHelper: JwtHelper = new JwtHelper();
- 
+
     constructor(private http: Http) {
         // set token if saved in local storage
         var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        this.username = currentUser && currentUser.username;
         this.token = currentUser && currentUser.token;
-        
+
     }
- 
+
     login(username: string, password: string): Observable<boolean> {
-        
+
         return this.http.post('http://127.0.0.1:8000/api/users/login/', JSON.stringify({ username: username, password: password }),{ headers: contentHeaders})
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
@@ -36,7 +38,7 @@ export class AuthenticationService {
                 if (token) {
                     // set token property
                     this.token = token;
- 
+
                     // updates observable (changes received by all subscribers to this observable)
                     this.subject.next({
                       username: username,
@@ -45,7 +47,7 @@ export class AuthenticationService {
                     // store username and jwt token in local storage to keep user logged in between page refreshes
                     localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token }));
                     this.refreshToken();
- 
+
                     // return true to indicate successful login
                     return true;
                 } else {
@@ -54,7 +56,7 @@ export class AuthenticationService {
                 }
             });
     }
- 
+
     logout(): void {
         // clear token remove user from local storage to log user out
         this.token = null;
@@ -104,27 +106,33 @@ export class AuthenticationService {
 
     console.log('refreshing token');
 
-    var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    this.token = currentUser && currentUser.token;
+    var currentUser : string;
 
-
-    return this.http.post('http://localhost:8000/api/users/api-token-refresh/', JSON.stringify({ token: this.token }),{ headers: contentHeaders})
+    return this.http.post('http://localhost:8000/api/users/api-token-refresh/',
+    JSON.stringify({ token: this.token }), { headers: contentHeaders})
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 let token = response.json() && response.json().token;
                 if (token) {
                     // set token property
+
                     this.token = token;
-                    // console.log ("new token: " + token);
- 
+
+
+                    // console.log ("token:" + token);
+                    // console.log ("username: " + this.username);
+                    // console.log (JSON.stringify({ username: xxx, token: token }));
+
                     // updates observable (changes received by all subscribers to this observable)
                     this.subject.next({
                       username: currentUser,
                       token: token
                       });
+
                     // store username and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify({ username: currentUser, token: token }));
- 
+
+                    localStorage.setItem('currentUser', JSON.stringify({ username: 'portos', token: token }));
+
                     // return true to indicate successful login
                     return true;
                 } else {
@@ -148,22 +156,21 @@ export class AuthenticationService {
         // console.log ("token: " + token);
         let tokenExpDate = this.jwtHelper.getTokenExpirationDate(token);
         // console.log ("tokenExpDate: " + tokenExpDate);
-    
+
         let jwtExp = this.jwtHelper.decodeToken(token).exp;
         let now: number = new Date().valueOf();
         let exp: Date = new Date(0);
         exp.setUTCSeconds(jwtExp);
         let delay: number = exp.valueOf() - now - 1000;
 
-
-        // console.log("delay:" +  delay)
+        console.log('delay:' +  delay);
 
         return IntervalObservable.create(delay)
-          .flatMap((i) => this.getNewJwt())
+          .flatMap((i) => this.getNewJwt());
 
-        
+
       }
-    
+
 
 
 }

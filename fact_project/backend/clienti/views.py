@@ -8,6 +8,7 @@ from rest_framework.status import HTTP_400_BAD_REQUEST, HTTP_204_NO_CONTENT, HTT
 
 from backend.clienti.models import Client, Contact
 from backend.clienti.serializers import ClientiSerializer,ContactsSerializer
+from rest_framework_jwt.authentication import JSONWebTokenAuthentication
 
 from django.http import Http404
 
@@ -17,6 +18,7 @@ class ClientList(APIView):
     List all Clients.
     """
     permission_classes = (AllowAny,)
+    authentication_classes = (JSONWebTokenAuthentication, )
 
     def get(self, request, format=None):
         clienti = Client.objects.all()

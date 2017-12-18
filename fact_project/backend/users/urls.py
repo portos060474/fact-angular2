@@ -9,9 +9,12 @@ from backend.clienti import urls
 
 urlpatterns = [
     url(r'^auth$', drf_views.obtain_auth_token, name='auth'),
-    url(r'^login/$', UserLoginAPIView.as_view(), name='login'),
+    url(r'^login/', obtain_jwt_token),
     url(r'^api-token-auth/', obtain_jwt_token),
     url(r'^api-token-refresh/', refresh_jwt_token),
 
     
 ]
+
+
+# url(r'^login/$', UserLoginAPIView.as_view(), name='login'),
