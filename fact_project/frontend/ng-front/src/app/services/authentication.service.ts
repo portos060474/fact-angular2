@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map'
 import { tokenNotExpired } from 'angular2-jwt';
  
 import { contentHeaders } from './headers';
+import { error } from 'selenium-webdriver';
 
 @Injectable()
 export class AuthenticationService {
@@ -20,6 +21,7 @@ export class AuthenticationService {
     }
  
     login(username: string, password: string): Observable<boolean> {
+        
         return this.http.post('http://127.0.0.1:8000/api/users/login/', JSON.stringify({ username: username, password: password }),{ headers: contentHeaders})
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response

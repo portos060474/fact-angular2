@@ -5,6 +5,8 @@ import { Http } from '@angular/http';
 // import { HttpClient } from '@angular/common/http';
 
 import { AuthenticationService } from '../../services/authentication.service';
+import { error } from 'selenium-webdriver';
+import { isDefined } from '@ng-bootstrap/ng-bootstrap/util/util';
 
 @Component({
 	selector: 'app-login',
@@ -30,10 +32,11 @@ export class LoginComponent implements OnInit {
 	ngOnInit() {
 		// reset login status
 		this._authenticationService.logout();
-		//this.login("login","portos","123qweasd.")
+		
 	};
 
 	login(event, username, password) {
+		
 		this.req = this._authenticationService.login(username, password)
 			.subscribe(result => {
 				if (result === true) {
@@ -57,7 +60,7 @@ export class LoginComponent implements OnInit {
 	};
 
 	ngOnDestroy(){
-		this.req.unsubscribe();
+		if ( isDefined(this.req)) {this.req.unsubscribe();}
 	}
 
 }

@@ -1,3 +1,51 @@
-<p>
-  clienti works!
-</p>
+
+  <div class="example-header">
+    <mat-form-field>
+      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+    </mat-form-field>
+
+    <mat-paginator #paginator
+      [pageSize]="20"
+      [pageSizeOptions]="[5, 10, 20, 50, 100]">
+    </mat-paginator>
+
+  </div>
+
+  <div class="example-container mat-elevation-z8">
+    <mat-table #table [dataSource]="dataSource" matSort>
+        
+         <!-- Name Column -->
+        <ng-container matColumnDef="nume">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+          <mat-cell *matCellDef="let client"> {{client.nume}} </mat-cell>
+        </ng-container>   
+
+        <!-- Adresa Column -->
+        <ng-container matColumnDef="adresa">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Adress </mat-header-cell>
+            <mat-cell *matCellDef="let client"> {{client.adresa}} </mat-cell>
+        </ng-container>
+
+        <!-- cui Column -->
+        <ng-container matColumnDef="cui">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Cui </mat-header-cell>
+            <mat-cell *matCellDef="let client"> {{client.cui}} </mat-cell>
+        </ng-container>      
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="activ">
+            <mat-header-cell *matHeaderCellDef mat-sort-header> Active </mat-header-cell>
+            <mat-cell *matCellDef="let client">
+                <mat-checkbox 
+                    [checked]="client.activ == 'Yes'"
+                    (change)="changeClientActiveStatus(client)">
+                </mat-checkbox>
+            </mat-cell>
+        </ng-container>        
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)=test(row)></mat-row>
+    
+  </mat-table>
+ 
+</div>

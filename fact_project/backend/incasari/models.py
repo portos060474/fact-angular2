@@ -5,10 +5,10 @@ from django.db import models
 from backend.clienti.models import Client
 
 class Incasari(models.Model):
-    id_client = models.ForeignKey(Client)
+    id_client = models.ForeignKey(Client,default=999)
     data_incasare = models.DateField()
     suma = models.DecimalField(max_digits=20, decimal_places=2)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'incasari'

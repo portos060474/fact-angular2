@@ -11,7 +11,7 @@ class Fac(models.Model):
         ('stornat','Factura stornata'),
     )
 
-    id_client = models.ForeignKey(Client)
+    id_client = models.ForeignKey(Client,default=999)
     data_fac = models.DateField()
     data_scad = models.DateField()
     status = models.CharField(max_length=7,choices=STATUSES,default='')
@@ -23,12 +23,12 @@ class Fac(models.Model):
     externa = models.CharField(max_length=3)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'fac'
 
 
 class FacDet(models.Model):
-    id_fac = models.ForeignKey(Fac)
+    id_fac = models.ForeignKey(Fac,default=999)
     denumire = models.CharField(max_length=256)
     um = models.CharField(max_length=256)
     cant = models.DecimalField(max_digits=10, decimal_places=2)
@@ -36,6 +36,6 @@ class FacDet(models.Model):
     pu_valuta = models.DecimalField(max_digits=10, decimal_places=2)
 
     class Meta:
-        managed = False
+        managed = True
         db_table = 'fac_det'
 
