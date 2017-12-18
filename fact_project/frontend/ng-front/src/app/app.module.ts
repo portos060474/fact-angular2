@@ -40,7 +40,7 @@ const appRoutes: Routes = [
   {
     path: 'clienti',
     component: ClientiComponent,
-    // canActivate: [AuthGuard]
+    canActivate: [AuthGuard]
   },
   { 
     path: '**', 

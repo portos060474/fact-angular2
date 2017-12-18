@@ -36,7 +36,7 @@ export class ClientService {
 
   setCustomerActiveStatus(client: Client[], status: string){
 
-        console.log("new status will be: " + status);
+        console.log(client['nume'] + "new status will be: " + status);
 
         client['activ'] = status
         
