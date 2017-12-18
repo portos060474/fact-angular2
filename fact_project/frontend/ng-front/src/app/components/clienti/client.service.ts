@@ -12,8 +12,12 @@ import { tokenize } from 'ngx-bootstrap/typeahead/typeahead-utils';
 
 
 
+
+
 @Injectable()
 export class ClientService {
+    
+
   private baseUrl = "http://127.0.0.1:8000/api/clienti/";  // web api URL
   private subject = new Subject<any>();
   public token: string;
@@ -21,7 +25,7 @@ export class ClientService {
   constructor(private http: Http) { 
     var currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.token = currentUser.token;
-
+    contentHeaders.delete('Authorization');
     contentHeaders.append('Authorization', "JWT " + this.token);
   }
   
@@ -51,4 +55,8 @@ export class ClientService {
                 });
 
   }
+
+
+
+  
 }

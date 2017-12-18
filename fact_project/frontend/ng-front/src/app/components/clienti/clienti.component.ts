@@ -4,7 +4,7 @@ import { HttpModule } from '@angular/http';
 import { Client } from './client';
 import { ClientService } from './client.service'
 import { MatTableDataSource, MatTableModule, MatPaginator,MatSort } from '@angular/material';
-
+import { JwtHelper } from 'angular2-jwt';
 
 
 
@@ -22,8 +22,10 @@ export class ClientiComponent implements OnInit {
     dataSource = new MatTableDataSource(ELEMENT_DATA);
 
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
+
+
 
   
 
@@ -40,7 +42,8 @@ export class ClientiComponent implements OnInit {
                 },
         error => alert("error"));
         
-        
+       
+    
  
   }
 
@@ -56,7 +59,7 @@ export class ClientiComponent implements OnInit {
   }
 
   test(row) {
-    console.log(row)
+    // console.log(row)
   }
 
   changeClientActiveStatus(client) {

@@ -8,6 +8,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { error } from 'selenium-webdriver';
 import { isDefined } from '@ng-bootstrap/ng-bootstrap/util/util';
 
+
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',
@@ -15,6 +16,7 @@ import { isDefined } from '@ng-bootstrap/ng-bootstrap/util/util';
 })
 
 export class LoginComponent implements OnInit {
+	jwtHelper: any;
 
 	req: any;
 	title: string = "Login";
@@ -36,7 +38,7 @@ export class LoginComponent implements OnInit {
 	};
 
 	login(event, username, password) {
-		let test_login = false
+		let test_login = false;
 		this.req = this._authenticationService.login(username, password)
 			.subscribe(result => {
 				if (result === true) {
@@ -44,6 +46,11 @@ export class LoginComponent implements OnInit {
 					// this._authenticationService.sendMessage();
 					console.log("login succesful")
 					test_login = true;
+
+					this._authenticationService.refreshToken()
+						.subscribe((res) => console.log(res));
+
+
 					this._router.navigate(['home']);
 				} else {
 					// login failed
@@ -57,7 +64,6 @@ export class LoginComponent implements OnInit {
 			return false;
 		}
 		event.preventDefault();
-	
 
 	};
 

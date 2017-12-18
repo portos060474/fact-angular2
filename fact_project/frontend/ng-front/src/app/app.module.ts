@@ -24,6 +24,7 @@ import { PaginationModule } from 'ngx-bootstrap';
 
 
 import {MatTableModule, MatPaginatorModule, MatFormFieldModule, MatSortModule,MatInputModule, MatCheckboxModule } from '@angular/material';
+import { AuthModule, AuthHttp, AuthConfig } from 'angular2-jwt';
 
 
 
@@ -76,6 +77,7 @@ const appRoutes: Routes = [
     MatPaginatorModule,
     MatSortModule,
     MatCheckboxModule,
+    
   
     
   
