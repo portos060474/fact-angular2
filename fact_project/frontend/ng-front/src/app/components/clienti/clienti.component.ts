@@ -25,7 +25,7 @@ export class ClientiComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    jwtHelper: JwtHelper = new JwtHelper();
+
 
   
 
@@ -42,12 +42,8 @@ export class ClientiComponent implements OnInit {
                 },
         error => alert("error"));
         
-        var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        console.log ("currentUser: " + currentUser);
-        var token = currentUser && currentUser.token;
-        console.log ("token: " + token);
-        let tokenExpDate = this.jwtHelper.getTokenExpirationDate(token);
-        console.log ("tokenExpDate: " + tokenExpDate);
+       
+    
  
   }
 

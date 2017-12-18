@@ -16,6 +16,7 @@ import { isDefined } from '@ng-bootstrap/ng-bootstrap/util/util';
 })
 
 export class LoginComponent implements OnInit {
+	jwtHelper: any;
 
 	req: any;
 	title: string = "Login";
@@ -44,6 +45,12 @@ export class LoginComponent implements OnInit {
 					// login successful
 					// this._authenticationService.sendMessage();
 					console.log("login succesful")
+
+
+					this._authenticationService.refreshToken()
+						.subscribe((res) => console.log(res));
+
+
 					this._router.navigate(['home']);
 				} else {
 					// login failed
