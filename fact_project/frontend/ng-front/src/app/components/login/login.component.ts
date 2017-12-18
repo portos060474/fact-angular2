@@ -8,6 +8,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 import { error } from 'selenium-webdriver';
 import { isDefined } from '@ng-bootstrap/ng-bootstrap/util/util';
 
+
 @Component({
 	selector: 'app-login',
 	templateUrl: './login.component.html',
@@ -51,7 +52,6 @@ export class LoginComponent implements OnInit {
 				}
 			});
 		event.preventDefault();
-	
 
 	};
 

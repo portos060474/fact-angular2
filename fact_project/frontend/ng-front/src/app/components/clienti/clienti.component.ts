@@ -4,7 +4,7 @@ import { HttpModule } from '@angular/http';
 import { Client } from './client';
 import { ClientService } from './client.service'
 import { MatTableDataSource, MatTableModule, MatPaginator,MatSort } from '@angular/material';
-
+import { JwtHelper } from 'angular2-jwt';
 
 
 
@@ -22,8 +22,10 @@ export class ClientiComponent implements OnInit {
     dataSource = new MatTableDataSource(ELEMENT_DATA);
 
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
+    @ViewChild(MatSort) sort: MatSort;
+
+    jwtHelper: JwtHelper = new JwtHelper();
 
   
 
@@ -40,7 +42,12 @@ export class ClientiComponent implements OnInit {
                 },
         error => alert("error"));
         
-        
+        var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        console.log ("currentUser: " + currentUser);
+        var token = currentUser && currentUser.token;
+        console.log ("token: " + token);
+        let tokenExpDate = this.jwtHelper.getTokenExpirationDate(token);
+        console.log ("tokenExpDate: " + tokenExpDate);
  
   }
 
