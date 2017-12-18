@@ -38,14 +38,14 @@ export class LoginComponent implements OnInit {
 	};
 
 	login(event, username, password) {
-		
+		let test_login = false;
 		this.req = this._authenticationService.login(username, password)
 			.subscribe(result => {
 				if (result === true) {
 					// login successful
 					// this._authenticationService.sendMessage();
 					console.log("login succesful")
-
+					test_login = true;
 
 					this._authenticationService.refreshToken()
 						.subscribe((res) => console.log(res));
@@ -58,6 +58,10 @@ export class LoginComponent implements OnInit {
 					error => console.log(error)
 				}
 			});
+		if (! test_login){
+			this.error = 'Username or password is incorrect';
+			return false;
+		}
 		event.preventDefault();
 
 	};
