@@ -25,7 +25,7 @@ export class ClientService {
   constructor(private http: Http) { 
     var currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.token = currentUser.token;
-
+    contentHeaders.delete('Authorization');
     contentHeaders.append('Authorization', "JWT " + this.token);
   }
   

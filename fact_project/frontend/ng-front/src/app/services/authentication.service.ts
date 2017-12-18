@@ -102,7 +102,7 @@ export class AuthenticationService {
     // Get a new JWT from Auth0 using the refresh token saved
     // in local storage
 
-    console.log('getNewJwt');
+    console.log('refreshing token');
 
     var currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.token = currentUser && currentUser.token;
@@ -115,7 +115,7 @@ export class AuthenticationService {
                 if (token) {
                     // set token property
                     this.token = token;
-                    console.log ("new token: " + token);
+                    // console.log ("new token: " + token);
  
                     // updates observable (changes received by all subscribers to this observable)
                     this.subject.next({
@@ -143,11 +143,11 @@ export class AuthenticationService {
     refreshToken = () => {
 
         var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        console.log ("currentUser: " + currentUser);
+        // console.log ("currentUser: " + currentUser);
         var token = currentUser && currentUser.token;
-        console.log ("token: " + token);
+        // console.log ("token: " + token);
         let tokenExpDate = this.jwtHelper.getTokenExpirationDate(token);
-        console.log ("tokenExpDate: " + tokenExpDate);
+        // console.log ("tokenExpDate: " + tokenExpDate);
     
         let jwtExp = this.jwtHelper.decodeToken(token).exp;
         let now: number = new Date().valueOf();
@@ -156,7 +156,7 @@ export class AuthenticationService {
         let delay: number = exp.valueOf() - now - 1000;
 
 
-        console.log("delay:" +  delay)
+        // console.log("delay:" +  delay)
 
         return IntervalObservable.create(delay)
           .flatMap((i) => this.getNewJwt())

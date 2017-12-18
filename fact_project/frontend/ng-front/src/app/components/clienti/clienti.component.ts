@@ -59,7 +59,7 @@ export class ClientiComponent implements OnInit {
   }
 
   test(row) {
-    console.log(row)
+    // console.log(row)
   }
 
   changeClientActiveStatus(client) {
