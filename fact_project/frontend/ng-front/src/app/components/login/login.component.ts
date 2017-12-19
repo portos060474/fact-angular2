@@ -9,6 +9,7 @@ import { error } from 'selenium-webdriver';
 import { isDefined } from '@ng-bootstrap/ng-bootstrap/util/util';
 
 
+
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
@@ -16,7 +17,6 @@ import { isDefined } from '@ng-bootstrap/ng-bootstrap/util/util';
 })
 
 export class LoginComponent implements OnInit {
-    jwtHelper: any;
 
     req: any;
     title: string = "Login";
@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
     usernameError: [any];
     passwordError: [any];
     nonFieldError: [any];
-    error: string;
+    error ='';
 
     constructor(
       public _router: Router,
@@ -44,24 +44,25 @@ export class LoginComponent implements OnInit {
           if (result === true) {
             // login successful
             // this._authenticationService.sendMessage();
-            console.log('login succesful');
+            console.log(username + 'login succesful');
             test_login = true;
             this.error = '';
-
+            
+            // start refresh token mechanism (time based)
             this._authenticationService.refreshToken()
               .subscribe((res) => console.log(res));
+
 
 
             this._router.navigate(['home']);
           } else {
             // login failed
-            this.error = 'Username or password is incorrect';
+            // this.error = 'Username or password is incorrect';
             error => console.log(error);
           }
         });
       if (! test_login ) {
         this.error = 'Username or password is incorrect';
-        // this.loading = false;
         return false;
       }
       event.preventDefault();

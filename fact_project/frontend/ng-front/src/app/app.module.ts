@@ -3,29 +3,28 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HttpModule } from '@angular/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { AppRoutingModule } from './app-routing.module';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { Ng2TableModule } from 'ng2-table/ng2-table';
+import { PaginationModule } from 'ngx-bootstrap';
+import {MatTableModule, MatPaginatorModule, MatFormFieldModule, MatSortModule,MatInputModule, MatCheckboxModule } from '@angular/material';
+import { AuthModule, AuthHttp, AuthConfig } from 'angular2-jwt';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 import { AppComponent } from './app.component';
 import { HomeComponent } from './components/home/home.component';
-import { AppRoutingModule } from './app-routing.module';
+
+import { LoginComponent } from './components/login/login.component';
 
 import { AuthenticationService } from './services/authentication.service'
 import { AuthGuard } from './services/auth.guard';
 
 import { ClientiComponent } from './components/clienti/clienti.component';
-import { LoginComponent } from './components/login/login.component';
-// import { HttpClient } from 'selenium-webdriver/http';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { ClientService } from './components/clienti/client.service';
 
-import { Ng2TableModule } from 'ng2-table/ng2-table';
-import { PaginationModule } from 'ngx-bootstrap';
+import { NavbarComponent } from './components/navbar/navbar.component';
 
-
-import {MatTableModule, MatPaginatorModule, MatFormFieldModule, MatSortModule,MatInputModule, MatCheckboxModule } from '@angular/material';
-import { AuthModule, AuthHttp, AuthConfig } from 'angular2-jwt';
-
+import {ToasterModule, ToasterService} from 'angular2-toaster';
 
 
 const appRoutes: Routes = [
@@ -77,7 +76,7 @@ const appRoutes: Routes = [
     MatPaginatorModule,
     MatSortModule,
     MatCheckboxModule,
-    
+    ToasterModule,
   
     
   

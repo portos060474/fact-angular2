@@ -1,10 +1,10 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 
 import { HttpModule } from '@angular/http';
-import { Client } from './client';
+import { Client } from '../../models/client';
 import { ClientService } from './client.service'
 import { MatTableDataSource, MatTableModule, MatPaginator,MatSort } from '@angular/material';
-import { JwtHelper } from 'angular2-jwt';
+
 
 
 
@@ -16,10 +16,11 @@ import { JwtHelper } from 'angular2-jwt';
 })
 
 export class ClientiComponent implements OnInit {
+  
     public clienti: Client[] ;
 
     displayedColumns = ['nume','adresa', 'cui', 'activ'];
-    dataSource = new MatTableDataSource(ELEMENT_DATA);
+    dataSource = new MatTableDataSource();
 
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -64,9 +65,10 @@ export class ClientiComponent implements OnInit {
 
   changeClientActiveStatus(client) {
     let newstatus: string;
+    let r: any;
     client.activ == 'Yes' ? newstatus="No" : newstatus="Yes"
-    this.clientService.setCustomerActiveStatus(client,newstatus)
-  }
+    this.clientService.setCustomerActiveStatus(client,newstatus);
+      // this.alertService.error(r);
 
 
 }

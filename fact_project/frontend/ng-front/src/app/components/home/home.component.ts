@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {ToasterService} from 'angular2-toaster';
 
 @Component({
   selector: 'app-home',
@@ -6,10 +7,16 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-
-  constructor() { }
+    private toasterService: ToasterService;
+    
+    constructor(toasterService: ToasterService) {
+        this.toasterService = toasterService;    
+    }
 
   ngOnInit() {
   }
 
+  popToast() {
+    this.toasterService.pop('success', 'Args Title', 'Args Body');
+}
 }
