@@ -7,16 +7,12 @@ import {ToasterService} from 'angular2-toaster';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-    private toasterService: ToasterService;
-    
-    constructor(toasterService: ToasterService) {
-        this.toasterService = toasterService;    
+    constructor(private toasterService: ToasterService) {}
+
+    ngOnInit() {
     }
 
-  ngOnInit() {
-  }
-
-  popToast() {
-    this.toasterService.pop('success', 'Args Title', 'Args Body');
-}
+    popToast() {
+      this.toasterService.pop('success', 'Args Title', 'Args Body');
+    }
 }

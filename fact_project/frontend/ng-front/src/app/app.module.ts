@@ -1,7 +1,9 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HttpModule } from '@angular/http';
+// import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
+
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -25,7 +27,11 @@ import { ClientService } from './components/clienti/client.service';
 import { NavbarComponent } from './components/navbar/navbar.component';
 
 import {ToasterModule, ToasterService} from 'angular2-toaster';
+import { FormsModule } from '@angular/forms';
 
+
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { JwtTokenInterceptor } from './services/token.interceptor';
 
 const appRoutes: Routes = [
   {
@@ -64,7 +70,8 @@ const appRoutes: Routes = [
     BrowserModule,
     RouterModule.forRoot(appRoutes),
     AppRoutingModule,
-    HttpModule,
+    // HttpModule,
+    HttpClientModule,
     NgbModule.forRoot(),
     BsDropdownModule.forRoot(),
     Ng2TableModule,
@@ -77,13 +84,23 @@ const appRoutes: Routes = [
     MatSortModule,
     MatCheckboxModule,
     ToasterModule,
+    FormsModule,
   
     
   
 
 
   ],
-  providers: [AuthenticationService, AuthGuard, ClientService],
+  providers: [
+    AuthenticationService, 
+    AuthGuard, 
+    ClientService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: JwtTokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

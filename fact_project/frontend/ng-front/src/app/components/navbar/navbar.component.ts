@@ -12,7 +12,7 @@ import { AuthenticationService } from '../../services/authentication.service';
 })
 
 export class NavbarComponent implements OnInit{
-
+	debugger
 	public isCollapsed = true;
 	subscription: Subscription;
 	username: string;

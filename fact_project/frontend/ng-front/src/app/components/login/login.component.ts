@@ -1,17 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { Http } from '@angular/http';
-// import { HttpClientModule } from '@angular/common/http';
-// import { HttpClient } from '@angular/common/http';
+import { Router, ActivatedRoute } from '@angular/router';
 
 import { AuthenticationService } from '../../services/authentication.service';
-import { error } from 'selenium-webdriver';
-import { isDefined } from '@ng-bootstrap/ng-bootstrap/util/util';
-
 
 
 @Component({
     selector: 'app-login',
+    moduleId: module.id,
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css'],
 })
@@ -21,60 +16,33 @@ export class LoginComponent implements OnInit {
     req: any;
     title: string = "Login";
     endpoint: string = 'http://127.0.0.1:8000/api/users/login/';
-    usernameError: [any];
-    passwordError: [any];
-    nonFieldError: [any];
-    error ='';
+    
+    model: any = {};
+    loading = false;
+    returnUrl: string;
 
     constructor(
-      public _router: Router,
-      public _http: Http,
-      public _authenticationService: AuthenticationService) {};
+        private route: ActivatedRoute,
+        private router: Router,
+        private authenticationService: AuthenticationService) { }
 
     ngOnInit() {
       // reset login status
-      this._authenticationService.logout();
-      this.error = '';
+      this.authenticationService.logout();
+      this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
-    login(event, username, password) {
-      let test_login = false;
-      this.req = this._authenticationService.login(username, password)
-        .subscribe(result => {
-          if (result === true) {
-            // login successful
-            // this._authenticationService.sendMessage();
-            console.log(username + 'login succesful');
-            test_login = true;
-            this.error = '';
-            
-            // start refresh token mechanism (time based)
-            this._authenticationService.refreshToken()
-              .subscribe((res) => console.log(res));
-
-
-
-            this._router.navigate(['home']);
-          } else {
-            // login failed
-            // this.error = 'Username or password is incorrect';
-            error => console.log(error);
-          }
-        });
-      if (! test_login ) {
-        this.error = 'Username or password is incorrect';
-        return false;
-      }
-      event.preventDefault();
-
-    }
-
-    signup(event) {
-      this._router.navigate(['signup']);
-    }
-
-    ngOnDestroy(){
-      if ( isDefined(this.req)) {this.req.unsubscribe(); }
-    }
+    login() {
+      this.loading = true;
+      this.authenticationService.login(this.model.username, this.model.password)
+          .subscribe(
+              data => {
+                  this.router.navigate([this.returnUrl]);
+              },
+              error => {
+                  // this.alertService.error(error);
+                  this.loading = false;
+              });
+  }
 
 }

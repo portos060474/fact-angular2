@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Http, Headers, Response } from '@angular/http';
+// import { Http, Headers, Response } from '@angular/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+
 import { Observable } from 'rxjs';
 import { Subject } from 'rxjs/Subject';
 import 'rxjs/add/operator/map'
@@ -21,45 +23,25 @@ export class AuthenticationService {
     refreshSubscription: any;
     jwtHelper: JwtHelper = new JwtHelper();
 
-    constructor(private http: Http) {
-        // set token if saved in local storage
-        var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        this.username = currentUser && currentUser.username;
-        this.token = currentUser && currentUser.token;
+    constructor(private http: HttpClient) { }
 
-    }
-
-    login(username: string, password: string): Observable<boolean> {
-
-        return this.http.post('http://127.0.0.1:8000/api/users/login/', JSON.stringify({ username: username, password: password }),{ headers: contentHeaders})
-            .map((response: Response) => {
+    login(username: string, password: string) {
+        return this.http.post<any>('http://127.0.0.1:8000/api/users/login/', { username: username, password: password })
+            .map(user => {
                 // login successful if there's a jwt token in the response
-                let token = response.json() && response.json().token;
-                if (token) {
-                    // set token property
-                    this.token = token;
-
-                    // updates observable (changes received by all subscribers to this observable)
-                    this.subject.next({
-                      username: username,
-                      token: token
-                      });
-                    // store username and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify({ username: username, token: token }));
+                if (user && user.token) {
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    
+                    localStorage.setItem('currentUser', JSON.stringify({ username: username, token: user.token }));
                     this.refreshToken();
-
-                    // return true to indicate successful login
-                    return true;
-                } else {
-                    // return false to indicate failed login
-                    return false;
                 }
+
+                return user;
             });
     }
 
-    logout(): void {
-        // clear token remove user from local storage to log user out
-        this.token = null;
+    logout() {
+        // remove user from local storage to log user out
         localStorage.removeItem('currentUser');
     }
 
@@ -95,54 +77,49 @@ export class AuthenticationService {
 
 
   refreshToken = () => {
+      
+    // console.log('start token refresh');
     var currentUser = JSON.parse(localStorage.getItem('currentUser'));
-    var token = currentUser && currentUser.token;
-    let tokenExpDate = this.jwtHelper.getTokenExpirationDate(token);
-    let jwtExp = this.jwtHelper.decodeToken(token).exp;
+    this.username = currentUser['username'];
+    this.token = currentUser['token'];
+    // console.log("old token:" + this.token);
+    let tokenExpDate = this.jwtHelper.getTokenExpirationDate(this.token);
+    let jwtExp = this.jwtHelper.decodeToken(this.token).exp;
     let now: number = new Date().valueOf();
     let exp: Date = new Date(0);
     exp.setUTCSeconds(jwtExp);
     let delay: number = exp.valueOf() - now - 1000;
-
+    
     return IntervalObservable.create(delay)
-      .flatMap((i) => this.getNewJwt());
+      .flatMap((i) => this.getNewJwt())
+      .subscribe();
   }
 
 
 
 
 
-  public getNewJwt() {
+  private getNewJwt() {
     // Get a new JWT from Auth0 using the refresh token saved
     // in local storage
+    var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    this.username = currentUser['username'];
+    this.token = currentUser['token'];
 
-    console.log('refreshing token');
-
-    var currentUser : string;
-
-    return this.http.post('http://localhost:8000/api/users/api-token-refresh/',
-    JSON.stringify({ token: this.token }), { headers: contentHeaders})
-            .map((response: Response) => {
-                let token = response.json() && response.json().token;
-                if (token) {
-                    this.token = token;
-                    // updates observable (changes received by all subscribers to this observable)
-                    this.subject.next({
-                      username: currentUser,
-                      token: token
-                      });
-                    localStorage.setItem('currentUser', JSON.stringify({ username:  this.username, token: token }));
-                    // return true to indicate successful login
-                    return true;
-                } else {
-                    // return false to indicate failed login
-                    return false;
+    return this.http.post<any>('http://127.0.0.1:8000/api/users/api-token-refresh/',JSON.stringify({ token: this.token }), { headers: contentHeaders})
+            .map(user => {
+                // login successful if there's a jwt token in the response
+                if (user && user.token) {
+                    // store user details and jwt token in local storage to keep user logged in between page refreshes
+                    // console.log("new token:" + user.token);
+                    localStorage.setItem('currentUser', JSON.stringify({ username:  this.username, token: user.token }));
                 }
-            });
-
+                return user;
+            })
     }
 
-
-
+    public getToken(): string {
+        return localStorage.getItem('currentUser')['token'];
+      }
 
 }

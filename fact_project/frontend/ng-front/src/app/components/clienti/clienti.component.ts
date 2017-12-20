@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild} from '@angular/core';
 
-import { HttpModule } from '@angular/http';
+import { HttpClientModule } from '@angular/common/http';
 import { Client } from '../../models/client';
 import { ClientService } from './client.service'
 import { MatTableDataSource, MatTableModule, MatPaginator,MatSort } from '@angular/material';
@@ -12,7 +12,7 @@ import { MatTableDataSource, MatTableModule, MatPaginator,MatSort } from '@angul
   selector: 'app-clienti',
   templateUrl: './clienti.component.html',
   styleUrls: ['./clienti.component.css'],
-  providers: [ HttpModule, ClientService ] 
+  providers: [ HttpClientModule, ClientService ] 
 })
 
 export class ClientiComponent implements OnInit {
@@ -26,13 +26,7 @@ export class ClientiComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-
-
-  
-
-    constructor(private clientService: ClientService) {
-
-    }
+    constructor(private clientService: ClientService) { }
 
   ngOnInit() {
     this.clientService.getCustomers()
@@ -42,10 +36,6 @@ export class ClientiComponent implements OnInit {
                 this.dataSource.data = clienti
                 },
         error => alert("error"));
-        
-       
-    
- 
   }
 
   applyFilter(filterValue: string) {
@@ -68,10 +58,11 @@ export class ClientiComponent implements OnInit {
     let r: any;
     client.activ == 'Yes' ? newstatus="No" : newstatus="Yes"
     this.clientService.setCustomerActiveStatus(client,newstatus);
-      // this.alertService.error(r);
-
+      // this.alertService.error(r)
+  }
 
 }
 
-
 const ELEMENT_DATA = [];
+
+
