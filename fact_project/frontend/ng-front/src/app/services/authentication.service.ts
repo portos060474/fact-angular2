@@ -119,7 +119,7 @@ export class AuthenticationService {
                     localStorage.setItem('currentUser', JSON.stringify({ username:  this.username, token: user.token }));
                 }
                 return user;
-            })
+            });
     }
 
     public getToken(): string {
