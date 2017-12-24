@@ -12,39 +12,39 @@ import { AuthenticationService } from '../../services/authentication.service';
 })
 
 export class NavbarComponent implements OnInit{
-	debugger
-	public isCollapsed = true;
-	subscription: Subscription;
-	username: string;
+    debugger
+    public isCollapsed = true;
+    subscription: Subscription;
+    username: string;
 
-	constructor(
-		public _router: Router,
-		private _authenticationService: AuthenticationService) {
-		this.subscription = this._authenticationService.getLoginStatus().subscribe(currentUser => {
-			if (currentUser){
-				this.username = currentUser['username'];
-			} else {
-				this.username = null;
-			}
-		});
-	}
+    constructor(
+      public _router: Router,
+      private _authenticationService: AuthenticationService) {
+      this.subscription = this._authenticationService.getLoginStatus().subscribe(currentUser => {
+        if (currentUser){
+          this.username = currentUser['username'];
+        } else {
+          this.username = null;
+        }
+      });
+    }
 
-	ngOnInit(){
-		let currentUser = JSON.parse(localStorage.getItem('currentUser'));
-		if (currentUser) {
-			this.username = currentUser['username'];
-		} else {
-			this.username = null;
-		}
-	}
+    ngOnInit(){
+      let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+      if (currentUser) {
+        this.username = currentUser['username'];
+      } else {
+        this.username = null;
+      }
+    }
 
-	ngOnDestroy() {
-		this.subscription.unsubscribe();
-	}
+    ngOnDestroy() {
+      this.subscription.unsubscribe();
+    }
 
-	logout() {
-		this._authenticationService.logout();
-		this._router.navigate(['login']);
-	}
+    logout() {
+      this._authenticationService.logout();
+      this._router.navigate(['login']);
+    }
 
 }

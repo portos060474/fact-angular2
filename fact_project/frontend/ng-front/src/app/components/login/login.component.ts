@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { AuthenticationService } from '../../services/authentication.service';
+import { environment } from '../../../environments/environment';
 
 
 @Component({
@@ -14,9 +15,9 @@ import { AuthenticationService } from '../../services/authentication.service';
 export class LoginComponent implements OnInit {
 
     req: any;
-    title: string = "Login";
-    endpoint: string = 'http://127.0.0.1:8000/api/users/login/';
-    
+    title: string = 'Login';
+    endpoint: string = environment.apiUrl + '/api/users/login/';
+
     model: any = {};
     loading = false;
     returnUrl: string;

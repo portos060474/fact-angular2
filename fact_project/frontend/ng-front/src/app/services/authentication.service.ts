@@ -13,6 +13,7 @@ import { error } from 'selenium-webdriver';
 
 import { JwtHelper } from 'angular2-jwt';
 import { IntervalObservable } from 'rxjs/observable/IntervalObservable';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthenticationService {
@@ -26,12 +27,12 @@ export class AuthenticationService {
     constructor(private http: HttpClient) { }
 
     login(username: string, password: string) {
-        return this.http.post<any>('http://127.0.0.1:8000/api/users/login/', { username: username, password: password })
+        return this.http.post<any>(environment.apiUrl + '/api/users/login/', { username: username, password: password })
             .map(user => {
                 // login successful if there's a jwt token in the response
                 if (user && user.token) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    
+
                     localStorage.setItem('currentUser', JSON.stringify({ username: username, token: user.token }));
                     this.refreshToken();
                 }
@@ -77,7 +78,7 @@ export class AuthenticationService {
 
 
   refreshToken = () => {
-      
+
     // console.log('start token refresh');
     var currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser['username'];
@@ -89,7 +90,7 @@ export class AuthenticationService {
     let exp: Date = new Date(0);
     exp.setUTCSeconds(jwtExp);
     let delay: number = exp.valueOf() - now - 1000;
-    
+
     return IntervalObservable.create(delay)
       .flatMap((i) => this.getNewJwt())
       .subscribe();
@@ -102,11 +103,14 @@ export class AuthenticationService {
   private getNewJwt() {
     // Get a new JWT from Auth0 using the refresh token saved
     // in local storage
-    var currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.username = currentUser['username'];
     this.token = currentUser['token'];
 
-    return this.http.post<any>('http://127.0.0.1:8000/api/users/api-token-refresh/',JSON.stringify({ token: this.token }), { headers: contentHeaders})
+    return this.http.post<any>(
+      environment.apiUrl + '/api/users/api-token-refresh/',
+      JSON.stringify({ token: this.token }),
+      { headers: contentHeaders})
             .map(user => {
                 // login successful if there's a jwt token in the response
                 if (user && user.token) {

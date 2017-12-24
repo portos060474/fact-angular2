@@ -13,12 +13,13 @@ import 'rxjs/add/operator/map';
 import { tokenize } from 'ngx-bootstrap/typeahead/typeahead-utils';
 
 import {ToasterService} from 'angular2-toaster';
+import { environment } from '../../../environments/environment';
 
 
 @Injectable()
 export class ClientService {
     public currentUser: any;
-    private baseUrl = 'http://127.0.0.1:8000/api/clienti/';  // web api URL
+    private baseUrl = environment.apiUrl + '/api/clienti/';  // web api URL
     private subject = new Subject<any>();
     public token: string;
     private toasterService: ToasterService;
@@ -56,5 +57,5 @@ export class ClientService {
         return true;
     }
 
-    
+
 }
