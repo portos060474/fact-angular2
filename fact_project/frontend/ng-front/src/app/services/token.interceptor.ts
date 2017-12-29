@@ -1,4 +1,4 @@
-import { Injectable, NgZone } from '@angular/core';
+
 import {
   HttpRequest,
   HttpHandler,
@@ -19,7 +19,7 @@ export class JwtTokenInterceptor implements HttpInterceptor {
   toasterService: any;
   private router;
 
-  constructor(toasterService: ToasterService, zone: NgZone, private injector: Injector) {this.toasterService = toasterService; }
+  constructor(toasterService: ToasterService, private injector: Injector) {this.toasterService = toasterService; }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     let currentUser = JSON.parse(localStorage.getItem('currentUser'));
@@ -37,7 +37,6 @@ export class JwtTokenInterceptor implements HttpInterceptor {
       }
     }, (err: any) => {
       if (err instanceof HttpErrorResponse) {
-        debugger
         if (err.status === 401) {
           // redirect to the login route
           // or show a modal

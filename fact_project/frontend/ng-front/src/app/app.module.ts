@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2TableModule } from 'ng2-table/ng2-table';
 import { PaginationModule } from 'ngx-bootstrap';
-import {MatTableModule, MatPaginatorModule, MatFormFieldModule, MatSortModule,MatInputModule, MatCheckboxModule } from '@angular/material';
+import {MatTableModule, MatPaginatorModule, MatFormFieldModule, MatSortModule,MatInputModule, MatCheckboxModule, MatDialog } from '@angular/material';
 import { AuthModule, AuthHttp, AuthConfig } from 'angular2-jwt';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
@@ -18,11 +18,13 @@ import { HomeComponent } from './components/home/home.component';
 
 import { LoginComponent } from './components/login/login.component';
 
-import { AuthenticationService } from './services/authentication.service'
+import { AuthenticationService } from './services/authentication.service';
 import { AuthGuard } from './services/auth.guard';
 
 import { ClientiComponent } from './components/clienti/clienti.component';
 import { ClientService } from './components/clienti/client.service';
+import { ModalClientComponent } from './components/clienti/modal-client/modal-client.component';
+import { MatDialogModule } from '@angular/material';
 
 import { NavbarComponent } from './components/navbar/navbar.component';
 
@@ -32,6 +34,7 @@ import { FormsModule } from '@angular/forms';
 
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtTokenInterceptor } from './services/token.interceptor';
+
 
 const appRoutes: Routes = [
   {
@@ -48,8 +51,8 @@ const appRoutes: Routes = [
     component: ClientiComponent,
     canActivate: [AuthGuard]
   },
-  { 
-    path: '**', 
+  {
+    path: '**',
     component: HomeComponent,
     canActivate: [AuthGuard]
   }
@@ -64,7 +67,8 @@ const appRoutes: Routes = [
     ClientiComponent,
     LoginComponent,
     NavbarComponent,
-    ClientiComponent
+    ClientiComponent,
+    ModalClientComponent
   ],
   imports: [
     BrowserModule,
@@ -83,17 +87,18 @@ const appRoutes: Routes = [
     MatPaginatorModule,
     MatSortModule,
     MatCheckboxModule,
+    MatDialogModule,
     ToasterModule,
     FormsModule,
-  
-    
-  
+
+
+
 
 
   ],
   providers: [
-    AuthenticationService, 
-    AuthGuard, 
+    AuthenticationService,
+    AuthGuard,
     ClientService,
     {
       provide: HTTP_INTERCEPTORS,
@@ -101,6 +106,7 @@ const appRoutes: Routes = [
       multi: true
     }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [ModalClientComponent],
 })
 export class AppModule { }

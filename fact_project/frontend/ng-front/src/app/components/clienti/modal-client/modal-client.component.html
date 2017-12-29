@@ -1,0 +1,42 @@
+<div class="example-container">
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.nume" placeholder="Client name?">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.adresa" placeholder="Client address?">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.j" placeholder="Client J?">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.cui" placeholder="Client CUI?">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.cont" placeholder="Client bank account?">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.banca" placeholder="Client bank name?">
+  </mat-form-field>
+  <br>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.email" placeholder="Client contact emails?">
+  </mat-form-field>
+  <br>
+
+
+  <!--
+<ul>
+  <li *ngFor="let item of data; let i = index">
+    {{i}} {{item}}
+  </li>
+</ul> -->
+
+</div>
+<button mat-button (click)="confirmSelection()" color="primary">
+  Ok
+</button>

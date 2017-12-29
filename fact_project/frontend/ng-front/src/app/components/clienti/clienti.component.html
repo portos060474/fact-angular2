@@ -13,12 +13,12 @@
 
   <div class="example-container mat-elevation-z8">
     <mat-table #table [dataSource]="dataSource" matSort>
-        
+
          <!-- Name Column -->
         <ng-container matColumnDef="nume">
           <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
           <mat-cell *matCellDef="let client"> {{client.nume}} </mat-cell>
-        </ng-container>   
+        </ng-container>
 
         <!-- Adresa Column -->
         <ng-container matColumnDef="adresa">
@@ -30,22 +30,22 @@
         <ng-container matColumnDef="cui">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Cui </mat-header-cell>
             <mat-cell *matCellDef="let client"> {{client.cui}} </mat-cell>
-        </ng-container>      
+        </ng-container>
 
         <!-- Name Column -->
         <ng-container matColumnDef="activ">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Active </mat-header-cell>
             <mat-cell *matCellDef="let client">
-                <mat-checkbox 
+                <mat-checkbox
                     [checked]="client.activ == 'Yes'"
                     (change)="changeClientActiveStatus(client)">
                 </mat-checkbox>
             </mat-cell>
-        </ng-container>        
+        </ng-container>
 
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns;" (click)=test(row)></mat-row>
-    
+
   </mat-table>
- 
+
 </div>

@@ -2,40 +2,41 @@ import { Component, OnInit, ViewChild} from '@angular/core';
 
 import { HttpClientModule } from '@angular/common/http';
 import { Client } from '../../models/client';
-import { ClientService } from './client.service'
-import { MatTableDataSource, MatTableModule, MatPaginator,MatSort } from '@angular/material';
+import { ClientService } from './client.service';
+import { MatTableDataSource, MatTableModule, MatPaginator, MatSort } from '@angular/material';
 
-
-
+import {ModalClientComponent} from './modal-client/modal-client.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-clienti',
   templateUrl: './clienti.component.html',
   styleUrls: ['./clienti.component.css'],
-  providers: [ HttpClientModule, ClientService ] 
+  providers: [ HttpClientModule, ClientService ]
 })
 
 export class ClientiComponent implements OnInit {
-  
+  animal: any;
+  name: any;
+
     public clienti: Client[] ;
 
-    displayedColumns = ['nume','adresa', 'cui', 'activ'];
+    displayedColumns = ['nume', 'adresa', 'cui', 'activ'];
     dataSource = new MatTableDataSource();
-
 
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    constructor(private clientService: ClientService) { }
+    constructor(private clientService: ClientService, public dialog: MatDialog) { }
 
   ngOnInit() {
     this.clientService.getCustomers()
         .subscribe(
-        clienti =>{
+        clienti => {
                 this.clienti = clienti;
-                this.dataSource.data = clienti
+                this.dataSource.data = clienti;
                 },
-        error => alert("error"));
+        error => alert('error'));
   }
 
   applyFilter(filterValue: string) {
@@ -50,14 +51,24 @@ export class ClientiComponent implements OnInit {
   }
 
   test(row) {
-    // console.log(row)
-  }
+    console.log(row);
+      let dialogRef = this.dialog.open(ModalClientComponent, {
+        width: '450px',
+        data: row,
+      });
+
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed' + result);
+        this.name = result;
+      });
+    }
+
 
   changeClientActiveStatus(client) {
     let newstatus: string;
     let r: any;
     client.activ == 'Yes' ? newstatus="No" : newstatus="Yes"
-    this.clientService.setCustomerActiveStatus(client,newstatus);
+    this.clientService.setCustomerActiveStatus(client, newstatus);
       // this.alertService.error(r)
   }
 
