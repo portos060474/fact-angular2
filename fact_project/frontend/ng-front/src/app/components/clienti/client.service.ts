@@ -38,18 +38,19 @@ export class ClientService {
             });
     }
 
-    setCustomerActiveStatus(client: Client[], status: string){
+    updateClient(client: Client[]) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.token = this.currentUser['token'];
         // console.log(this.token);
         contentHeaders.delete('Authorization');
         contentHeaders.append('Authorization', 'JWT ' + this.token);
-        client['activ'] = status;
+
 
         this.http.put(this.baseUrl + client['id'] + '/', client , { headers: contentHeaders})
             .map((response: Response) => response)
             .subscribe(
                 result => {
+                  this.toasterService.pop('info', 'updated succesfully');
                 },
                 error => {
                     this.toasterService.pop('error', 'can\'t send data');

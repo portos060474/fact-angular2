@@ -36,9 +36,7 @@
         <ng-container matColumnDef="activ">
             <mat-header-cell *matHeaderCellDef mat-sort-header> Active </mat-header-cell>
             <mat-cell *matCellDef="let client">
-                <mat-checkbox
-                    [checked]="client.activ == 'Yes'"
-                    (change)="changeClientActiveStatus(client)">
+                <mat-checkbox [checked]="client.activ == 'Yes'" [disabled]=true>
                 </mat-checkbox>
             </mat-cell>
         </ng-container>

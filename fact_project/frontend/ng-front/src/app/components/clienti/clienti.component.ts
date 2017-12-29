@@ -58,19 +58,13 @@ export class ClientiComponent implements OnInit {
       });
 
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed' + result);
-        this.name = result;
+
+        if (result !== undefined ) {
+          // console.log('The dialog was closed' + result);
+          this.clientService.updateClient(result);
+        }
       });
     }
-
-
-  changeClientActiveStatus(client) {
-    let newstatus: string;
-    let r: any;
-    client.activ == 'Yes' ? newstatus="No" : newstatus="Yes"
-    this.clientService.setCustomerActiveStatus(client, newstatus);
-      // this.alertService.error(r)
-  }
 
 }
 
