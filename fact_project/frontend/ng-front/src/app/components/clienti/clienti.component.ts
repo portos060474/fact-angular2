@@ -50,9 +50,9 @@ export class ClientiComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  test(row) {
-    console.log(row);
-      let dialogRef = this.dialog.open(ModalClientComponent, {
+  onRowClicked(row) {
+    // console.log(row);
+      const dialogRef = this.dialog.open(ModalClientComponent, {
         width: '450px',
         data: row,
       });
