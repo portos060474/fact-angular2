@@ -1,33 +1,33 @@
 <div class="example-container">
   <mat-form-field>
-    <input matInput [(ngModel)]="data.nume" placeholder="Client name?">
+    <input matInput [(ngModel)]="data.nume" placeholder="Client name?" (change)="doSomething($event)">
   </mat-form-field>
   <br>
   <mat-form-field>
-    <input matInput [(ngModel)]="data.adresa" placeholder="Client address?">
+    <input matInput [(ngModel)]="data.adresa" placeholder="Client address?" (change)="doSomething($event)">
   </mat-form-field>
   <br>
   <mat-form-field>
-    <input matInput [(ngModel)]="data.j" placeholder="Client J?">
+    <input matInput [(ngModel)]="data.j" placeholder="Client J?" (change)="doSomething($event)">
   </mat-form-field>
   <br>
   <mat-form-field>
-    <input matInput [(ngModel)]="data.cui" placeholder="Client CUI?">
+    <input matInput [(ngModel)]="data.cui" placeholder="Client CUI?" (change)="doSomething($event)">
   </mat-form-field>
   <br>
   <mat-form-field>
-    <input matInput [(ngModel)]="data.cont" placeholder="Client bank account?">
+    <input matInput [(ngModel)]="data.cont" placeholder="Client bank account?" (change)="doSomething($event)">
   </mat-form-field>
   <br>
   <mat-form-field>
-    <input matInput [(ngModel)]="data.banca" placeholder="Client bank name?">
+    <input matInput [(ngModel)]="data.banca" placeholder="Client bank name?" (change)="doSomething($event)">
   </mat-form-field>
   <br>
   <mat-form-field>
-    <input matInput [(ngModel)]="data.email" placeholder="Client contact emails?">
+    <input matInput [(ngModel)]="data.email" placeholder="Client contact emails?" (change)="doSomething($event)">
   </mat-form-field>
   <br>
-  <mat-checkbox [checked]="data.activ == 'Yes'"> Active
+  <mat-checkbox [checked]="data.activ == 'Yes'"  (change)="doSomething($event)">Active
   </mat-checkbox>
 
   <!--
@@ -38,6 +38,11 @@
 </ul> -->
 
 </div>
-<button mat-button (click)="confirmSelection()" color="primary">
-  Ok
+<br>
+
+
+<button mat-raised-button (click)="confirmSelection()" color="primary">Save
+</button>
+
+<button mat-raised-button (click)="onNoClick()" color="primary">Cancel
 </button>

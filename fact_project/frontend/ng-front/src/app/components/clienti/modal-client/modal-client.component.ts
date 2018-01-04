@@ -8,8 +8,8 @@ import { concat } from 'rxjs/operators/concat';
   styleUrls: ['./modal-client.component.css']
 })
 export class ModalClientComponent  {
-  name: any;
 
+  private changed = false;
 
   constructor(
     public dialogRef: MatDialogRef<ModalClientComponent>,
@@ -24,4 +24,9 @@ export class ModalClientComponent  {
     console.log(this.data);
   }
 
+  doSomething (e) {
+    let whatChanged = e.target.getAttribute('ng-reflect-name');
+    let newValue = this[whatChanged];
+    console.log(whatChanged, newValue, e);
+}
 }

@@ -4,6 +4,14 @@
       <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
     </mat-form-field>
 
+    <ul style="font-weight: 600;" class="navbar-nav mr-auto">
+
+          <li class="nav-item">
+            <a class="nav-link" (click)="onRowClicked()">Add Client</a>
+          </li>
+
+    </ul>
+
     <mat-paginator #paginator
       [pageSize]="20"
       [pageSizeOptions]="[5, 10, 20, 50, 100]">
@@ -45,5 +53,7 @@
         <mat-row *matRowDef="let row; columns: displayedColumns;" (click)=onRowClicked(row)></mat-row>
 
   </mat-table>
+
+
 
 </div>

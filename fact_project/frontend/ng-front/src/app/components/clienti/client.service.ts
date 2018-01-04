@@ -38,15 +38,15 @@ export class ClientService {
             });
     }
 
-    updateClient(client: Client[]) {
+    updateClient(method, client: Client[]) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.token = this.currentUser['token'];
         // console.log(this.token);
         contentHeaders.delete('Authorization');
         contentHeaders.append('Authorization', 'JWT ' + this.token);
 
-
-        this.http.put(this.baseUrl + client['id'] + '/', client , { headers: contentHeaders})
+        if (method === 'put') {
+            this.http.put(this.baseUrl + client['id'] + '/', client , { headers: contentHeaders})
             .map((response: Response) => response)
             .subscribe(
                 result => {
@@ -54,7 +54,22 @@ export class ClientService {
                 },
                 error => {
                     this.toasterService.pop('error', 'can\'t send data');
+                    console.log(error);
+                    return false;
                 });
+          } else {
+            this.http.post(this.baseUrl, client, { headers: contentHeaders})
+            .map((response: Response) => response)
+            .subscribe(
+                result => {
+                  this.toasterService.pop('info', 'updated succesfully');
+                },
+                error => {
+                    this.toasterService.pop('error', 'can\'t send data');
+                    console.log(error);
+                    return false;
+                });
+          }
         return true;
     }
 

@@ -9,5 +9,5 @@ export class Client {
         public banca: string,
         public email: string,
         public activ: string,
-        ){}
+        ) {}
     }

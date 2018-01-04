@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef} from '@angular/core';
 
 import { HttpClientModule } from '@angular/common/http';
 import { Client } from '../../models/client';
@@ -27,17 +27,22 @@ export class ClientiComponent implements OnInit {
     @ViewChild(MatPaginator) paginator: MatPaginator;
     @ViewChild(MatSort) sort: MatSort;
 
-    constructor(private clientService: ClientService, public dialog: MatDialog) { }
+    constructor(
+      private clientService: ClientService,
+      public dialog: MatDialog,
+      private changeDetectorRefs: ChangeDetectorRef
+    ) { }
 
   ngOnInit() {
     this.clientService.getCustomers()
-        .subscribe(
-        clienti => {
-                this.clienti = clienti;
-                this.dataSource.data = clienti;
-                },
-        error => alert('error'));
+    .subscribe(
+    clienti => {
+            this.clienti = clienti;
+            this.dataSource.data = clienti;
+            },
+    error => alert('error'));
   }
+
 
   applyFilter(filterValue: string) {
     filterValue = filterValue.trim(); // Remove whitespace
@@ -51,7 +56,13 @@ export class ClientiComponent implements OnInit {
   }
 
   onRowClicked(row) {
-    // console.log(row);
+      let method = 'post';
+      if (row !== undefined) {
+        method = 'put';
+      } else {
+        row = new Client(null, '', '', '', '', '', '', '', 'Yes');
+      }
+
       const dialogRef = this.dialog.open(ModalClientComponent, {
         width: '450px',
         data: row,
@@ -61,9 +72,13 @@ export class ClientiComponent implements OnInit {
 
         if (result !== undefined ) {
           // console.log('The dialog was closed' + result);
-          this.clientService.updateClient(result);
+          if (this.clientService.updateClient(method, result)) {
+            this.dataSource.data.push(row);
+          }
         }
       });
+
+
     }
 
 }
