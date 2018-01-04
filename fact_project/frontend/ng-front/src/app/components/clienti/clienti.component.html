@@ -1,59 +1,56 @@
+<div class="example-header">
+  <mat-form-field>
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+  </mat-form-field>
 
-  <div class="example-header">
-    <mat-form-field>
-      <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
-    </mat-form-field>
 
-    <ul style="font-weight: 600;" class="navbar-nav mr-auto">
 
-          <li class="nav-item">
-            <a class="nav-link" (click)="onRowClicked()">Add Client</a>
-          </li>
+  <mat-paginator #paginator [pageSize]="20" [pageSizeOptions]="[5, 10, 20, 50, 100]">
+  </mat-paginator>
 
-    </ul>
+</div>
 
-    <mat-paginator #paginator
-      [pageSize]="20"
-      [pageSizeOptions]="[5, 10, 20, 50, 100]">
-    </mat-paginator>
+<div class="example-container mat-elevation-z8">
+  <mat-table #table [dataSource]="dataSource" matSort>
 
-  </div>
+    <!-- Name Column -->
+    <ng-container matColumnDef="nume">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
+      <mat-cell *matCellDef="let client"> {{client.nume}} </mat-cell>
+    </ng-container>
 
-  <div class="example-container mat-elevation-z8">
-    <mat-table #table [dataSource]="dataSource" matSort>
+    <!-- Adresa Column -->
+    <ng-container matColumnDef="adresa">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Address </mat-header-cell>
+      <mat-cell *matCellDef="let client"> {{client.adresa}} </mat-cell>
+    </ng-container>
 
-         <!-- Name Column -->
-        <ng-container matColumnDef="nume">
-          <mat-header-cell *matHeaderCellDef mat-sort-header> Name </mat-header-cell>
-          <mat-cell *matCellDef="let client"> {{client.nume}} </mat-cell>
-        </ng-container>
+    <!-- cui Column -->
+    <ng-container matColumnDef="cui">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Cui </mat-header-cell>
+      <mat-cell *matCellDef="let client"> {{client.cui}} </mat-cell>
+    </ng-container>
 
-        <!-- Adresa Column -->
-        <ng-container matColumnDef="adresa">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Address </mat-header-cell>
-            <mat-cell *matCellDef="let client"> {{client.adresa}} </mat-cell>
-        </ng-container>
+    <!-- Name Column -->
+    <ng-container matColumnDef="activ">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Active </mat-header-cell>
+      <mat-cell *matCellDef="let client">
+        <mat-checkbox [checked]="client.activ == 'Yes'" [disabled]=true>
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
 
-        <!-- cui Column -->
-        <ng-container matColumnDef="cui">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Cui </mat-header-cell>
-            <mat-cell *matCellDef="let client"> {{client.cui}} </mat-cell>
-        </ng-container>
-
-        <!-- Name Column -->
-        <ng-container matColumnDef="activ">
-            <mat-header-cell *matHeaderCellDef mat-sort-header> Active </mat-header-cell>
-            <mat-cell *matCellDef="let client">
-                <mat-checkbox [checked]="client.activ == 'Yes'" [disabled]=true>
-                </mat-checkbox>
-            </mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns;" (click)=onRowClicked(row)></mat-row>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;" (click)=onRowClicked(row)></mat-row>
 
   </mat-table>
 
 
-
 </div>
+<br>
+<div class="example-container">
+<div class="button-row">
+    <button mat-button (click)="onRowClicked()" color="primary">Add Client
+    </button>
+    </div>
+  </div>

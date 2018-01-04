@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { Client } from '../../models/client';
 import { ClientService } from './client.service';
 import { MatTableDataSource, MatTableModule, MatPaginator, MatSort } from '@angular/material';
+import {MatButtonModule} from '@angular/material/button';
 
 import {ModalClientComponent} from './modal-client/modal-client.component';
 import { MatDialog } from '@angular/material/dialog';

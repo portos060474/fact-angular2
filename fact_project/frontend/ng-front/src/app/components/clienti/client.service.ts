@@ -39,11 +39,6 @@ export class ClientService {
     }
 
     updateClient(method, client: Client[]) {
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        this.token = this.currentUser['token'];
-        // console.log(this.token);
-        contentHeaders.delete('Authorization');
-        contentHeaders.append('Authorization', 'JWT ' + this.token);
 
         if (method === 'put') {
             this.http.put(this.baseUrl + client['id'] + '/', client , { headers: contentHeaders})
@@ -53,7 +48,7 @@ export class ClientService {
                   this.toasterService.pop('info', 'updated succesfully');
                 },
                 error => {
-                    this.toasterService.pop('error', 'can\'t send data');
+                    this.toasterService.pop('error', error);
                     console.log(error);
                     return false;
                 });
@@ -65,7 +60,7 @@ export class ClientService {
                   this.toasterService.pop('info', 'updated succesfully');
                 },
                 error => {
-                    this.toasterService.pop('error', 'can\'t send data');
+                    this.toasterService.pop('error', error.string);
                     console.log(error);
                     return false;
                 });

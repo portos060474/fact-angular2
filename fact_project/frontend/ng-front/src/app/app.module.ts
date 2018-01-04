@@ -9,7 +9,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { Ng2TableModule } from 'ng2-table/ng2-table';
 import { PaginationModule } from 'ngx-bootstrap';
-import {MatTableModule, MatPaginatorModule, MatFormFieldModule, MatSortModule,MatInputModule, MatCheckboxModule, MatDialog } from '@angular/material';
+import {MatTableModule, MatPaginatorModule, MatFormFieldModule, MatSortModule,MatInputModule, MatCheckboxModule, MatDialog, MatButton, MatButtonModule } from '@angular/material';
 import { AuthModule, AuthHttp, AuthConfig } from 'angular2-jwt';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
@@ -89,6 +89,7 @@ const appRoutes: Routes = [
     MatCheckboxModule,
     MatDialogModule,
     ToasterModule,
+    MatButtonModule,
     FormsModule,
 
 
